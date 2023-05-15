@@ -12,8 +12,8 @@ import javax.persistence.ManyToOne;
 public class Seat extends BaseModel{
     private String seatNumber;
 
-    private int rowIndex;
-    private int columnIndex;
+    private Integer rowIndex;
+    private Integer columnIndex;
 
     @ManyToOne
     private SeatType seatType;

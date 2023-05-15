@@ -14,7 +14,7 @@ import javax.persistence.Enumerated;
 public class Payment extends BaseModel{
     private String refNo;
 
-    private int amount;
+    private Integer amount;
 
     @Enumerated(EnumType.ORDINAL)
     private PaymentProvider paymentProvider;
