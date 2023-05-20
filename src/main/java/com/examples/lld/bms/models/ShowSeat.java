@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,6 +19,9 @@ public class ShowSeat extends BaseModel{
 
     @ManyToOne
     private Seat seat;
+
     @Enumerated(EnumType.ORDINAL)
     private showSeatStatus showSeatStatus;
+
+    private Date blockedAt;
 }

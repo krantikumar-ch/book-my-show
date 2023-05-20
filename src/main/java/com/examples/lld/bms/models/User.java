@@ -11,8 +11,9 @@ import java.util.List;
 @Setter
 @Entity
 public class User extends BaseModel{
-    private String name;
+    private String password;
     private String email;
+
     @OneToMany
     private List<Booking> bookings;
 }
