@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public abstract class BaseResponseDto {
-    private ResponseStatus status;
-    private String exceptionMessage;
+    /*private ResponseStatus status;
+    private String exceptionMessage;*/
 }

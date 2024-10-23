@@ -27,20 +27,22 @@ public class BookMyShowApplication implements CommandLineRunner {
 	}
 
 	private void signUp(){
-		SignupResponseDto response = userController.signUp(new SignupRequestDto("krantikumar.ch@gmail.com", "welcome"));
-		System.out.println("Sign UP response "+response.getStatus());
+		ResponseDto<SignupResponseDto> response = userController.signUp(new SignupRequestDto("krantikumar.ch@gmail.com", "welcome"));
+		SignupResponseDto signupResponseDto = response.body();
+		System.out.println("Sign UP response "+response.responseStatus());
 		showExceptionMessage(response);
 	}
 
 	private void login(){
-		LoginResponseDto response = userController.login(new LoginRequestDto("krantikumar.ch@gmail.com", "welcome1"));
-		System.out.println("Login response "+response.getStatus());
-		showExceptionMessage(response);
+		ResponseDto<LoginResponseDto> responseDto = userController.login(new LoginRequestDto("krantikumar.ch@gmail.com", "welcome1"));
+		LoginResponseDto response = responseDto.body();
+		System.out.println("Login response "+responseDto.responseStatus());
+		showExceptionMessage(responseDto);
 
 	}
 
-	private void showExceptionMessage(BaseResponseDto response){
-		String message = response.getExceptionMessage();
+	private void showExceptionMessage(ResponseDto<?> response){
+		String message = response.message();
 		if(message != null && !message.isBlank()){
 			System.out.println("exception Message: "+message);
 		}

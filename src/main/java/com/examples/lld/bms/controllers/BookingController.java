@@ -17,21 +17,17 @@ public class BookingController {
     private BookingService bookingService;
 
     public BookMovieResponseDto bookMovie(BookMovieRequestDto bookMovieRequestDto){
-        Long userId = bookMovieRequestDto.getUserId();
-        List<Long> seatIds = bookMovieRequestDto.getShowSeatId();
-        Long showId  = bookMovieRequestDto.getShowId();
-        BookMovieResponseDto response = new BookMovieResponseDto();
+        Long userId = bookMovieRequestDto.userId();
+        List<Long> seatIds = bookMovieRequestDto.showSeatId();
+        Long showId  = bookMovieRequestDto.showId();
         try{
             Booking booking = bookingService.bookMovie(userId, seatIds, showId);
-            response.setBookingId(booking.getId());
-            response.setAmount(booking.getAmount());
-            response.setStatus(ResponseStatus.SUCCESS);
+            return new BookMovieResponseDto(booking.getId(), booking.getAmount(), ResponseStatus.SUCCESS);
+
         }
         catch(Exception e){
-            response.setStatus(ResponseStatus.FAILURE);
-            response.setExceptionMessage(e.getMessage());
+            return new BookMovieResponseDto(ResponseStatus.FAILURE, e.getCause().getMessage());
         }
 
-        return response;
     }
 }

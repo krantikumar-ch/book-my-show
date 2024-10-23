@@ -4,7 +4,10 @@ import com.examples.lld.bms.dtos.*;
 import com.examples.lld.bms.models.User;
 import com.examples.lld.bms.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+
+import static com.examples.lld.bms.DtoUtils.convertToDto;
 
 @Controller
 public class UserController {
@@ -16,31 +19,28 @@ public class UserController {
         this.userService = userService;
     }
 
-    public SignupResponseDto signUp(SignupRequestDto request){
-        SignupResponseDto response = new SignupResponseDto();
+    public ResponseDto<SignupResponseDto> signUp(SignupRequestDto request){
         try{
             User user = userService.signUp(request.getEmail(), request.getPassword());
-            response.setUserId(user.getId());
-            response.setStatus(ResponseStatus.SUCCESS);
+            SignupResponseDto SignupResponseDto = convertToDto(user, SignupResponseDto.class);
+            return new ResponseDto<>(ResponseStatus.SUCCESS, SignupResponseDto);
         }
         catch(Exception e){
-            response.setStatus(ResponseStatus.FAILURE);
-            response.setExceptionMessage(e.getMessage());
+            return new ResponseDto<>(ResponseStatus.FAILURE, e.getMessage());
         }
-        return response;
     }
 
-    public LoginResponseDto login(LoginRequestDto loginRequest){
-        LoginResponseDto response = new LoginResponseDto();
+    public ResponseDto<LoginResponseDto> login(LoginRequestDto loginRequest){
+
         try{
             User user = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
-            response.setUserId(user.getId());
-            response.setStatus(ResponseStatus.SUCCESS);
+            LoginResponseDto loginResponseDto = convertToDto(user, LoginResponseDto.class);
+            return new ResponseDto<>(ResponseStatus.SUCCESS, loginResponseDto);
         }
         catch(Exception e){
-            response.setStatus(ResponseStatus.FAILURE);
-            response.setExceptionMessage(e.getMessage());
+            return new ResponseDto<>(ResponseStatus.FAILURE, e.getMessage());
         }
-        return response;
+
     }
+
 }
